@@ -1,7 +1,10 @@
+import { Button } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+
 export default function App() {
   return (
-    <div className="App">
-      <p>aaa</p>
-    </div>
+    <ChakraProvider>
+      <Button colorScheme="teal">ボタン</Button>
+    </ChakraProvider>
   );
 }
