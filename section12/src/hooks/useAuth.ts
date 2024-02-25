@@ -3,10 +3,12 @@ import { useCallback, useState } from "react";
 import { User } from "../components/types/api/user";
 import { useHistory } from "react-router-dom";
 import { useMessage } from "./useMessage";
+import { useLoginUser } from "./useLoginUser";
 
 export const useAuth = () => {
   const history = useHistory();
   const { showMessage } = useMessage();
+  const { setLoginUser } = useLoginUser();
 
   const [loding, setLoding] = useState(false);
   const login = useCallback(
@@ -16,6 +18,7 @@ export const useAuth = () => {
         .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
         .then((res) => {
           if (res.data) {
+            setLoginUser(res.data);
             showMessage({ title: "ログインしました", status: "info" });
             history.push("/home");
           } else {
@@ -27,7 +30,7 @@ export const useAuth = () => {
         )
         .finally(() => setLoding(false));
     },
-    [history, showMessage]
+    [history, showMessage, setLoginUser]
   );
   return { login, loding };
 };
